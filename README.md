@@ -51,17 +51,17 @@ ACS730-Final-Project/
 │   │   ├── alb/
 │   │   └── asg/
 │   │
-│   ├── modules/
-│   │   ├── aws_network/
-│   │   ├── aws_webservers/
-│   │   ├── aws_alb/
-│   │   ├── aws_asg/
-│   │   ├── aws_sg/
-│   │   └── globalvars/
-│   │
-│   └── .github/
-│       └── workflows/
-│           └── tfsec.yml
+├── modules/
+│   ├── aws_network/
+│   ├── aws_webservers/
+│   ├── aws_alb/
+│   ├── aws_asg/
+│   ├── aws_sg/
+│   └── globalvars/
+│   
+├── .github/
+│    └── workflows/
+│          └── tfsec.yml
 ```
 
 ---
@@ -91,9 +91,9 @@ Each environment requires an S3 bucket to store Terraform remote state.
 Example:
 
 ```text
-dev-acs730-assignment-yiming
-staging-acs730-assignment-yiming
-prod-acs730-assignment-yiming
+dev-project-yiming
+staging-project-yiming
+prod-project-yiming
 ```
 
 Terraform state files are stored separately for each Terraform component.
@@ -144,7 +144,7 @@ prod/
 ## 1. Deploy Networking
 Example for Development:
 ```text
-cd dev/network
+cd ../network
 terraform init
 terraform apply
 ```
@@ -161,7 +161,7 @@ Route Tables
 ---
 ## 2. Deploy Web Servers and Bastion Host
 ```text
-cd dev/webservers
+cd ../webservers
 terraform init
 terraform apply
 ```
@@ -175,7 +175,7 @@ Bastion Host
 ---
 ## 3. Deploy Application Load Balancer
 ```text
-cd dev/alb
+cd ../alb
 terraform init
 terraform apply
 ```
@@ -188,7 +188,7 @@ Listeners
 ---
 ## 4. Deploy Auto Scaling Group
 ```text
-cd dev/asg
+cd ../asg
 terraform init
 terraform apply
 ```
@@ -262,25 +262,25 @@ to detect security issues in Terraform configurations.
 Destroy resources in reverse deployment order.
 ## Remove Auto Scaling Group
 ```text
-cd dev/asg
+cd ../asg
 terraform destroy
 ```
 ---
 ## Remove Load Balancer
 ```text
-cd dev/alb
+cd ../alb
 terraform destroy
 ```
 ---
 ## Remove Web Servers and Bastion Host
 ```text
-cd dev/webservers
+cd ../webservers
 terraform destroy
 ```
 ---
 ## Remove Network
 ```text
-cd dev/network
+cd ../network
 terraform destroy
 ```
 Repeat the same cleanup process for:
