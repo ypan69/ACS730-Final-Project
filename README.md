@@ -1,9 +1,10 @@
-# ACS730 Final Project - Two-Tier web application automation with Terraform
+# ACS730 Final Project - Two-Tier Web Application Automation with Terraform
+
 Yiming
 
 ## Project Overview
 
-This project deploys a highly available web application infrastructure on AWS using Terraform.
+This project deploys a highly available two-tier web application infrastructure on AWS using Terraform.
 
 The solution uses a modular Terraform design with separate environments:
 
@@ -24,7 +25,6 @@ The infrastructure includes:
 - Auto Scaling Group (ASG)
 - CloudWatch monitoring and dynamic scaling policies
 - S3-hosted website images
-
 
 ---
 
@@ -63,40 +63,60 @@ ACS730-Final-Project/
 │       └── workflows/
 │           └── tfsec.yml
 ```
+
 ---
 
 # Prerequisites
 
-Before deployment, install and configure:
+Before deployment, install and configure the following tools:
 
 ## Required Tool
+
 - Terraform
 
-Verify installations:
-terraform version
+Verify installation:
 
-S3 Requirements
-Terraform Remote State
-Each environment requires an S3 bucket to store Terraform state.
+```text
+terraform version
+```
+
+---
+
+## S3 Requirements
+
+### Terraform Remote State
+
+Each environment requires an S3 bucket to store Terraform remote state.
+
 Example:
 
+```text
 dev-acs730-assignment-yiming
 staging-acs730-assignment-yiming
 prod-acs730-assignment-yiming
+```
 
-Terraform state files are stored separately:
+Terraform state files are stored separately for each Terraform component.
+
 Example:
 
+```text
 dev-network/terraform.tfstate
 dev-webservers/terraform.tfstate
 dev-alb/terraform.tfstate
 dev-asg/terraform.tfstate
+```
 
 The same structure is used for staging and production environments.
 
-Website Images
-The web servers load images from S3.
+---
+
+## Website Images
+
+The web servers load website images from a private S3 bucket.
+
 Images must be uploaded manually before deployment.
+
 Required files:
 
 ```text
@@ -105,51 +125,84 @@ image/
 └── logo.png
 ```
 
-Terraform Deployment
-Terraform deployment should be performed in the following order:
-1. Deploy Networking
-Example for Development:
+---
 
-cd dev/network
-terraform init
-terraform plan
-terraform apply
+# Terraform Deployment
 
-2. Deploy Web Servers and Bastion Host
-
-cd dev/webservers
-terraform init
-terraform plan
-terraform apply
-
-This creates:
-EC2 Launch Template
-Security Groups
-Bastion Host
-
-3. Deploy Application Load Balancer
-
-cd dev/alb
-terraform init
-terraform plan
-terraform apply
-
-4. Deploy Auto Scaling Group
-
-cd dev/asg
-terraform init
-terraform plan
-terraform apply
+Terraform deployment should be performed in the following order.
 
 The same deployment process applies to:
+
+```text
+dev/
 staging/
 prod/
+```
 
+---
 
-Terraform Remote State
+## 1. Deploy Networking
+Example for Development:
+```text
+cd dev/network
+terraform init
+terraform apply
+```
+This creates:
+
+```text
+VPC
+Public Subnets
+Private Subnets
+Internet Gateway
+NAT Gateway
+Route Tables
+```
+---
+## 2. Deploy Web Servers and Bastion Host
+```text
+cd dev/webservers
+terraform init
+terraform apply
+```
+This creates:
+```text
+EC2 Launch Template
+IAM Instance Profile
+Security Groups
+Bastion Host
+```
+---
+## 3. Deploy Application Load Balancer
+```text
+cd dev/alb
+terraform init
+terraform apply
+```
+This creates:
+```text
+Application Load Balancer
+Target Group
+Listeners
+```
+---
+## 4. Deploy Auto Scaling Group
+```text
+cd dev/asg
+terraform init
+terraform apply
+```
+This creates:
+```text
+Auto Scaling Group
+Launch Template Association
+CloudWatch Alarms
+Scaling Policies
+```
+---
+# Terraform Remote State
 The project uses Terraform remote state to connect infrastructure components.
-
-Examples:
+Example:
 ```text
 Network
    ↓
@@ -157,73 +210,81 @@ Webservers
    ├──> ALB
    └──> ASG
 ```
-
-Remote state allows different Terraform configurations to share resource outputs such as:
+Remote state allows different Terraform configurations to share resource outputs:
+```text
 VPC ID
 Subnet IDs
 Security Group IDs
 Launch Template ID
 Target Group ARN
-Auto Scaling and Monitoring
-
+```
+---
+# Auto Scaling and Monitoring
 The Auto Scaling Group uses CloudWatch alarms for dynamic scaling.
-
-Scale Out
+## Scale Out
 When CPU utilization exceeds the configured threshold:
 ```text
 CloudWatch Alarm
         ↓
 Scale-Out Policy
         ↓
-Add EC2 instance
+Add EC2 Instance
 ```
-
-Scale In
+---
+## Scale In
 When CPU utilization decreases:
 ```text
 CloudWatch Alarm
         ↓
 Scale-In Policy
         ↓
-Remove EC2 instance
+Remove EC2 Instance
 ```
-
-Security Scanning
-GitHub Actions are configured to automatically perform Terraform security scanning.
+---
+# Security Scanning
+GitHub Actions automatically performs Terraform security scanning.
 Workflow location:
+```text
 .github/workflows/tfsec.yml
-
+```
 Security scans are triggered by:
+```text
 Push events
 Pull requests
+```
 The workflow uses:
+```text
 tfsec
-
+```
 to detect security issues in Terraform configurations.
-
-
-Cleanup
-Destroy resources in reverse order:
-Remove Auto Scaling Group
-
+---
+# Cleanup
+Destroy resources in reverse deployment order.
+## Remove Auto Scaling Group
+```text
 cd dev/asg
 terraform destroy
-
-Remove Load Balancer
-
+```
+---
+## Remove Load Balancer
+```text
 cd dev/alb
 terraform destroy
-
-Remove Web Servers and Bastion
-
+```
+---
+## Remove Web Servers and Bastion Host
+```text
 cd dev/webservers
 terraform destroy
-
-Remove Network
-
+```
+---
+## Remove Network
+```text
 cd dev/network
 terraform destroy
-
-Repeat the same process for:
-staging
-prod
+```
+Repeat the same cleanup process for:
+```text
+staging/
+prod/
+```
