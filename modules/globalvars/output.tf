@@ -10,14 +10,14 @@ output "instance_type" {
 # Default tags
 output "default_tags" {
   value = {
-    Owner  = "Yiming"
+    Owner  = "Project"
     App    = "Web"
   }
 }
 
 # Prefix to identify resources
 output "prefix" {
-  value     = "Assignment"
+  value     = "Yiming"
 }
 
 

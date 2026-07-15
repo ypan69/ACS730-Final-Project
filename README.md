@@ -1,11 +1,8 @@
 # ACS730 Final Project - Two-Tier Web Application Automation with Terraform
-
 Yiming
 
 ## Project Overview
-
 This project deploys a highly available two-tier web application infrastructure on AWS using Terraform.
-
 The solution uses a modular Terraform design with separate environments:
 
 - Development (`dev`)
@@ -13,7 +10,6 @@ The solution uses a modular Terraform design with separate environments:
 - Production (`prod`)
 
 Each environment contains independent Terraform configurations while sharing reusable Terraform modules.
-
 The infrastructure includes:
 
 - VPC networking
@@ -27,9 +23,15 @@ The infrastructure includes:
 - S3-hosted website images
 
 ---
-
+## Naming Convention
+All AWS resources follow an environment-based naming convention.
+Example:
+```text
+Yiming-Dev-<Resource>
+Yiming-Staging-<Resource>
+Yiming-Prod-<Resource>
+---
 ## Project Structure
-
 ```text
 ACS730-Final-Project/
 ├── project/
@@ -60,87 +62,57 @@ ACS730-Final-Project/
 │   └── globalvars/
 │   
 ├── .github/
-│    └── workflows/
-│          └── tfsec.yml
+     └── workflows/
+           └── tfsec.yml
 ```
-
 ---
-
 # Prerequisites
-
 Before deployment, install and configure the following tools:
-
 ## Required Tool
-
 - Terraform
-
 Verify installation:
-
 ```text
 terraform version
 ```
-
 ---
-
 ## S3 Requirements
-
 ### Terraform Remote State
-
 Each environment requires an S3 bucket to store Terraform remote state.
-
 Example:
-
 ```text
 dev-project-yiming
 staging-project-yiming
 prod-project-yiming
 ```
-
 Terraform state files are stored separately for each Terraform component.
-
 Example:
-
 ```text
 dev-network/terraform.tfstate
 dev-webservers/terraform.tfstate
 dev-alb/terraform.tfstate
 dev-asg/terraform.tfstate
 ```
-
 The same structure is used for staging and production environments.
-
 ---
-
 ## Website Images
-
 The web servers load website images from a private S3 bucket.
-
 Images must be uploaded manually before deployment.
-
 Required files:
-
 ```text
 image/
 ├── banner.jpg
 └── logo.png
 ```
-
 ---
-
 # Terraform Deployment
-
 Terraform deployment should be performed in the following order.
-
 The same deployment process applies to:
-
 ```text
 dev/
 staging/
 prod/
 ```
-
 ---
-
 ## 1. Deploy Networking
 Example for Development:
 ```text
@@ -149,7 +121,6 @@ terraform init
 terraform apply
 ```
 This creates:
-
 ```text
 VPC
 Public Subnets
