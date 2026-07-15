@@ -28,9 +28,11 @@ The infrastructure includes:
 
 ---
 
-# Repository Structure
+## Project Structure
+
+```text
 ACS730-Final-Project/
-├── projecy/
+├── project/
 │   ├── dev/
 │   │   ├── network/
 │   │   ├── webservers/
@@ -43,26 +45,24 @@ ACS730-Final-Project/
 │   │   ├── alb/
 │   │   └── asg/
 │   │
-│   └── prod/
-│       ├── network/
-│       ├── webservers/
-│       ├── alb/
-│       └── asg/
-│
-├── modules/
-│   ├── aws_network/
-│   ├── aws_webservers/
-│   ├── aws_alb/
-│   ├── aws_asg/
-│   ├── aws_sg/
-│   └── globalvars/
-│
-└── .github/
-    └── workflows/
-        └── tfsec.yml
-
-
-
+│   ├── prod/
+│   │   ├── network/
+│   │   ├── webservers/
+│   │   ├── alb/
+│   │   └── asg/
+│   │
+│   ├── modules/
+│   │   ├── aws_network/
+│   │   ├── aws_webservers/
+│   │   ├── aws_alb/
+│   │   ├── aws_asg/
+│   │   ├── aws_sg/
+│   │   └── globalvars/
+│   │
+│   └── .github/
+│       └── workflows/
+│           └── tfsec.yml
+```
 ---
 
 # Prerequisites
@@ -99,9 +99,11 @@ The web servers load images from S3.
 Images must be uploaded manually before deployment.
 Required files:
 
+```text
 image/
 ├── banner.jpg
 └── logo.png
+```
 
 Terraform Deployment
 Terraform deployment should be performed in the following order:
@@ -146,15 +148,15 @@ prod/
 
 Terraform Remote State
 The project uses Terraform remote state to connect infrastructure components.
+
 Examples:
+```text
 Network
-   |
-   v
+   ↓
 Webservers
-   |
-   +--> ALB
-   |
-   +--> ASG
+   ├──> ALB
+   └──> ASG
+```
 
 Remote state allows different Terraform configurations to share resource outputs such as:
 VPC ID
@@ -168,23 +170,23 @@ The Auto Scaling Group uses CloudWatch alarms for dynamic scaling.
 
 Scale Out
 When CPU utilization exceeds the configured threshold:
+```text
 CloudWatch Alarm
-        |
-        v
+        ↓
 Scale-Out Policy
-        |
-        v
+        ↓
 Add EC2 instance
+```
 
 Scale In
 When CPU utilization decreases:
+```text
 CloudWatch Alarm
-        |
-        v
+        ↓
 Scale-In Policy
-        |
-        v
+        ↓
 Remove EC2 instance
+```
 
 Security Scanning
 GitHub Actions are configured to automatically perform Terraform security scanning.
