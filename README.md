@@ -30,7 +30,6 @@ Example:
 Yiming-Dev-<Resource>
 Yiming-Staging-<Resource>
 Yiming-Prod-<Resource>
-```
 ---
 ## Project Structure
 ```text
@@ -119,7 +118,7 @@ Example for Development:
 ```text
 cd ../network
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 This creates:
 ```text
@@ -135,7 +134,7 @@ Route Tables
 ```text
 cd ../webservers
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 This creates:
 ```text
@@ -149,7 +148,7 @@ Bastion Host
 ```text
 cd ../alb
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 This creates:
 ```text
@@ -162,7 +161,7 @@ Listeners
 ```text
 cd ../asg
 terraform init
-terraform apply
+terraform apply -auto-approve
 ```
 This creates:
 ```text
@@ -235,25 +234,25 @@ Destroy resources in reverse deployment order.
 ## Remove Auto Scaling Group
 ```text
 cd ../asg
-terraform destroy
+terraform destroy -auto-approve
 ```
 ---
 ## Remove Load Balancer
 ```text
 cd ../alb
-terraform destroy
+terraform destroy -auto-approve
 ```
 ---
 ## Remove Web Servers and Bastion Host
 ```text
 cd ../webservers
-terraform destroy
+terraform destroy -auto-approve
 ```
 ---
 ## Remove Network
 ```text
 cd ../network
-terraform destroy
+terraform destroy -auto-approve
 ```
 Repeat the same cleanup process for:
 ```text
