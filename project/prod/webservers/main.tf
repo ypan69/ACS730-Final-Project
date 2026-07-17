@@ -7,7 +7,7 @@ provider "aws" {
 data "terraform_remote_state" "network" { // This is to use Outputs from Remote State
   backend = "s3"
   config = {
-    bucket = "${var.env}-${lower(local.prefix)}-${lower(local.owner)}"       // Bucket from where to GET Terraform State
+    bucket = "${var.env}-${lower(local.owner)}-${lower(local.prefix)}"       // Bucket from where to GET Terraform State
     key    = "${var.env}-network/terraform.tfstate" // Object name in the bucket to GET Terraform State
     region = "us-east-1"                            // Region where bucket created
   }
