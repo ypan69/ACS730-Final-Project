@@ -39,7 +39,7 @@ module "sg"{
 # Adding SSH key to Amazon EC2
 resource "aws_key_pair" "web_key" {
   key_name   = "${var.env}"
-  public_key = file("${path.module}/${var.env}.pub")
+  public_key = file("${var.env}.pub")
 }
 
 # Reference provisioned by Networking
