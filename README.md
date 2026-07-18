@@ -30,6 +30,7 @@ Example:
 Yiming-Dev-<Resource>
 Yiming-Staging-<Resource>
 Yiming-Prod-<Resource>
+```
 ---
 ## Project Structure
 ```text
