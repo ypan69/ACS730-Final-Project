@@ -30,7 +30,6 @@ Example:
 Yiming-Dev-<Resource>
 Yiming-Staging-<Resource>
 Yiming-Prod-<Resource>
-```
 ---
 ## Project Structure
 ```text
@@ -118,7 +117,11 @@ prod/
 Example for Development:
 ```text
 cd ../network
+```
+```text
 terraform init
+```
+```text
 terraform apply -auto-approve
 ```
 This creates:
@@ -131,10 +134,14 @@ NAT Gateway
 Route Tables
 ```
 ---
-## 2. Deploy Web Servers and Bastion Host
+## 2. Deploy Launch Template and Bastion Host
 ```text
 cd ../webservers
+```
+```text
 terraform init
+```
+```text
 terraform apply -auto-approve
 ```
 This creates:
@@ -148,7 +155,11 @@ Bastion Host
 ## 3. Deploy Application Load Balancer
 ```text
 cd ../alb
+```
+```text
 terraform init
+```
+```text
 terraform apply -auto-approve
 ```
 This creates:
@@ -161,7 +172,11 @@ Listeners
 ## 4. Deploy Auto Scaling Group
 ```text
 cd ../asg
+```
+```text
 terraform init
+```
+```text
 terraform apply -auto-approve
 ```
 This creates:
@@ -235,24 +250,32 @@ Destroy resources in reverse deployment order.
 ## Remove Auto Scaling Group
 ```text
 cd ../asg
+```
+```text
 terraform destroy -auto-approve
 ```
 ---
 ## Remove Load Balancer
 ```text
 cd ../alb
+```
+```text
 terraform destroy -auto-approve
 ```
 ---
 ## Remove Web Servers and Bastion Host
 ```text
 cd ../webservers
+```
+```text
 terraform destroy -auto-approve
 ```
 ---
 ## Remove Network
 ```text
 cd ../network
+```
+```text
 terraform destroy -auto-approve
 ```
 Repeat the same cleanup process for:
