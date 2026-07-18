@@ -44,6 +44,7 @@ resource "aws_key_pair" "web_key" {
 
 # Reference provisioned by Networking
 resource "aws_launch_template" "my_amazon" {
+  name                          = "${local.name_prefix}-LaunchTemplate"
   image_id                      = data.aws_ami.latest_amazon_linux.id
   instance_type                 = lookup(module.globalvars.instance_type, var.env)
   key_name                      = aws_key_pair.web_key.key_name
@@ -79,10 +80,10 @@ resource "aws_launch_template" "my_amazon" {
   }
 
   tag_specifications {
-    resource_type = "instance"
-
+    resource_type = "launch-template"
+  
     tags = merge(local.default_tags, {
-      Name = "${local.name_prefix}-Webserver"
+      Name = "${local.name_prefix}-LaunchTemplate"
     })
   }
 }
