@@ -109,9 +109,9 @@ image/
 Terraform deployment should be performed in the following order.
 The same deployment process applies to:
 ```text
-dev/
-staging/
-prod/
+dev (10.100.0.0/16)
+staging (10.200.0.0/16)
+prod (10.250/0.0/16)
 ```
 ---
 ## 1. Deploy Networking
@@ -147,7 +147,7 @@ terraform apply -auto-approve
 ```
 This creates:
 ```text
-EC2 Launch Template
+EC2 Launch Template (Dev: t3.micro, Staging: t3.small, Prod: t3.medium)
 IAM Instance Profile
 Security Groups
 Bastion Host
@@ -182,7 +182,7 @@ terraform apply -auto-approve
 ```
 This creates:
 ```text
-Auto Scaling Group
+Auto Scaling Group (Dev: 2, Staging: 3, Prod: 3)
 Launch Template Association
 CloudWatch Alarms
 Scaling Policies
