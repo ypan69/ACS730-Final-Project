@@ -57,7 +57,7 @@ resource "aws_launch_template" "my_amazon" {
     {
       env         = upper(var.env)
       prefix      = upper(local.prefix)
-      bucket_name = "${var.env}-acs730-${lower(local.prefix)}-${lower(local.owner)}"
+      bucket_name = "${var.env}-${lower(local.owner)}-${lower(local.prefix)}"
     }
   ))
   
