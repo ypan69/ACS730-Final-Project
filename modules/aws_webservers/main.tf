@@ -80,10 +80,10 @@ resource "aws_launch_template" "my_amazon" {
   }
 
   tag_specifications {
-    resource_type = "launch-template"
+    resource_type = "instance"
   
     tags = merge(local.default_tags, {
-      Name = "${local.name_prefix}-LaunchTemplate"
+      Name = "${local.name_prefix}-Webserver"
     })
   }
 }
