@@ -117,7 +117,9 @@ prod (10.250/0.0/16)
 ## 1. Deploy Networking
 Example for Development:
 ```text
-cd ../network
+cd ACS730-Final-Project/project/dev/network
+cd ACS730-Final-Project/project/staging/network
+cd ACS730-Final-Project/project/prod/network
 ```
 ```text
 terraform init
